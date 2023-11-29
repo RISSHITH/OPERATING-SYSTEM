@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+// Define the number of processes and resources
+#define NUM_PROCESSES 5
+#define NUM_RESOURCES 3
+// Available resources
+int available[NUM_RESOURCES] = {3, 3, 2};
+// Maximum demand of each process
+int max_demand[NUM_PROCESSES][NUM_RESOURCES] = {
+    {7, 5, 3},
+    {3, 2, 2},
+    {9, 0, 2},
+    {2, 2, 2},
+    {4, 3, 3}
+};
+// Allocated resources to processes
+int allocation[NUM_PROCESSES][NUM_RESOURCES] = {
+    {0, 1, 0},
+    {2, 0, 0},
+    {3, 0, 2},
+    {2, 1, 1},
+    {0, 0, 2}
+};
+// Need resources for each process
+int need[NUM_PROCESSES][NUM_RESOURCES];
+// Function to check if the system is in a safe state
+int isSafeState(int process, int request[]) {
+    // Step 1: Check if the request is less than or equal to the need
+    for (int i = 0; i < NUM_RESOURCES; i++) {
+        if (request[i] > need[process][i]) {
+            return 0; // Request exceeds need
+        }
+    }
+    // Step 2: Check if the request is less than or equal to the available resources
+    for (int i = 0; i < NUM_RESOURCES; i++) {
+        if (request[i] > available[i]) {
+            return 0; // Request exceeds available resources
+        }
+    }
